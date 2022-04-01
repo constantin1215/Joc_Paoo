@@ -2,62 +2,42 @@ package com.company;
 
 import inputs.KeyboardListener;
 import inputs.NewMouseListener;
+import scenes.Menu;
+import scenes.Playing;
+import scenes.Settings;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
 
 public class Game extends JFrame implements Runnable {
 
     private GameScreen gameScreen;
-    private BufferedImage img;
     private Thread gameThread;
 
     private final double FPS_SET = 120.0;
     private final double UPS_SET = 60.0;
 
-    private NewMouseListener mouseListen;
-    private KeyboardListener keybdListen;
+    private Render render;
+    private Menu menu;
+    private Playing playing;
+    private Settings settings;
 
     public Game() {
 
-        try{
-            importImg();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        gameScreen = new GameScreen(img);
+        setResizable(false);
+        initClasses();
         add(gameScreen);
-
         pack();
         setVisible(true);
     }
 
-    private void initInputs() {
-        mouseListen = new NewMouseListener();
-        keybdListen = new KeyboardListener();
-
-        addMouseListener(mouseListen);
-        addMouseMotionListener(mouseListen);
-        addKeyListener(keybdListen);
-
-        requestFocus();
-    }
-
-    private void importImg() throws FileNotFoundException {
-        InputStream is = new BufferedInputStream(new FileInputStream("resources/spriteatlas.png"));
-
-        try {
-            img = ImageIO.read(is);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private void initClasses() {
+        render = new Render(this);
+        gameScreen = new GameScreen(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
     }
 
     private void start() {
@@ -71,7 +51,7 @@ public class Game extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.initInputs();
+        game.gameScreen.initInputs();
         game.start();
     }
 
@@ -110,7 +90,21 @@ public class Game extends JFrame implements Runnable {
                 lastTimeCheck = System.currentTimeMillis();
             }
         }
+    }
 
+    public Render getRender() {
+        return render;
+    }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }

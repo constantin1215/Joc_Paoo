@@ -1,7 +1,11 @@
 package inputs;
 
+import com.company.GameStates;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import static com.company.GameStates.*;
 
 public class KeyboardListener implements KeyListener {
     @Override
@@ -12,9 +16,11 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A)
-            System.out.println("A");
-        else if (e.getKeyCode() == KeyEvent.VK_B)
-            System.out.println("B");
+            GameStates.gameStates = MENU;
+        else if (e.getKeyCode() == KeyEvent.VK_S)
+            GameStates.gameStates = PLAYING;
+        else if (e.getKeyCode() == KeyEvent.VK_D)
+            GameStates.gameStates = SETTINGS;
     }
 
     @Override
