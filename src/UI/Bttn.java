@@ -3,10 +3,10 @@ package UI;
 import java.awt.*;
 
 public class Bttn {
-    private int x,y,width,height;
+    public int x,y,width,height, id;
     private String text;
-
     private Rectangle limits;
+    private boolean mouseOver, mousePressed;
 
     public Bttn(String text,int x, int y, int width, int height) {
         this.text = text;
@@ -14,6 +14,18 @@ public class Bttn {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.id = -1;
+
+        initLimits();
+    }
+
+    public Bttn(String text,int x, int y, int width, int height, int id) {
+        this.text = text;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.id = id;
 
         initLimits();
     }
@@ -23,17 +35,26 @@ public class Bttn {
     }
 
     public void draw(Graphics g) {
-        //Body
-        g.setColor(Color.yellow);
-        g.fillRect(x,y,width,height);
+        drawBody(g);
+        drawBorder(g);
+        drawText(g);
+    }
 
-        //Border
+    private void drawBorder(Graphics g) {
         g.setColor(Color.blue);
         g.drawRect(x,y,width,height);
+        if (mousePressed) {
+            g.drawRect(x+1,y+1,width - 2,height - 2);
+            g.drawRect(x+2,y+2,width - 4,height - 4);
+        }
+    }
 
-        //Text
-        drawText(g);
-
+    private void drawBody(Graphics g) {
+        if (mouseOver)
+            g.setColor(Color.red);
+        else
+            g.setColor(Color.yellow);
+        g.fillRect(x,y,width,height);
     }
 
     private void drawText(Graphics g) {
@@ -45,5 +66,22 @@ public class Bttn {
 
     public Rectangle getLimits() {
         return limits;
+    }
+
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+    }
+
+    public void setMousePressed(boolean mousePressed) {
+        this.mousePressed = mousePressed;
+    }
+
+    public void resetBool() {
+        this.mouseOver = false;
+        this.mousePressed = false;
+    }
+
+    public int getId() {
+        return id;
     }
 }

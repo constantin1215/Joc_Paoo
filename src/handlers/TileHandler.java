@@ -11,7 +11,7 @@ public class TileHandler {
 
     public Tile GRASS, WATER, ROAD;
     public BufferedImage atlas;
-    public ArrayList<Tile> tile = new ArrayList<>();
+    public ArrayList<Tile> tiles = new ArrayList<>();
 
     public TileHandler() {
         loadAtlas();
@@ -19,9 +19,10 @@ public class TileHandler {
     }
 
     private void createTiles() {
-        tile.add(GRASS = new Tile(getSprite(8,1)));
-        tile.add(WATER = new Tile(getSprite(0,6)));
-        tile.add(ROAD = new Tile(getSprite(9,0)));
+        int id = 0;
+        tiles.add(GRASS = new Tile(getSprite(8,1),id++,"Grass"));
+        tiles.add(WATER = new Tile(getSprite(0,6),id++,"Water"));
+        tiles.add(ROAD = new Tile(getSprite(9,0),id++,"Road"));
     }
 
     private void loadAtlas() {
@@ -34,7 +35,7 @@ public class TileHandler {
     }
 
     public BufferedImage getSprite(int id) {
-        return tile.get(id).getSprite();
+        return tiles.get(id).getSprite();
     }
 
     private BufferedImage getSprite(int x, int y) {
