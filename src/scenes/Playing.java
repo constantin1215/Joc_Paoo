@@ -1,69 +1,84 @@
 package scenes;
 
-import UI.BottomBar;
-import UI.Bttn;
+import UI.ActionBar;
 import com.company.Game;
-import handlers.TileHandler;
-import helperMethods.LevelBuilder;
+import helperMethods.LoadSave;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-import static com.company.GameStates.*;
 
 public class Playing extends GameScene implements SceneMethods{
 
     private int[][] lvl;
-    private TileHandler tileHandler;
 
-
-    private BottomBar bottomBar;
+    private ActionBar actionBar;
+    private int mouseX, mouseY;
 
     public Playing(Game game) {
         super(game);
 
-        lvl = LevelBuilder.getLevelData();
-        tileHandler = new TileHandler();
-        bottomBar = new BottomBar(0,640,640,100, this);
+        loadDefaultLvl();
+        actionBar = new ActionBar(0,640,640,100, this);
     }
 
-    public TileHandler getTileHandler() {
-        return tileHandler;
+    private void loadDefaultLvl() {
+        lvl = LoadSave.readLevelData("new_lvl");
     }
 
     @Override
     public void render(Graphics g) {
-        for (int y = 0; y < lvl.length; y++){
-            for (int x = 0; x < lvl.length; x++) {
-                int id = lvl[y][x];
-                g.drawImage(tileHandler.getSprite(id),x*32,y*32,null);
+        drawLvl(g);
+        actionBar.draw(g);
+    }
+
+    private void drawLvl(Graphics g) {
+        for (int i = 0; i < lvl.length; i++){
+            for (int j = 0; j < lvl.length; j++) {
+                int id = lvl[i][j];
+                g.drawImage(getSprite(id),j*32,i*32,null);
             }
         }
-        bottomBar.draw(g);
+    }
+
+    public void setLevel(int[][] lvl) {
+        this.lvl = lvl;
+    }
+
+    private BufferedImage getSprite(int id) {
+        return getGame().getTileHandler().getSprite(id);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
         if (y >= 640) {
-            bottomBar.mouseClicked(x,y);
+            actionBar.mouseClicked(x,y);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-        if (y >= 640) {
-            bottomBar.mouseMoved(x,y);
+        if (y >= 640)
+            actionBar.mouseMoved(x,y);
+        else {
+            mouseX = (x / 32) * 32;
+            mouseY = (y / 32) * 32;
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
         if (y >= 640) {
-            bottomBar.mousePressed(x,y);
+            actionBar.mousePressed(x,y);
         }
     }
 
     @Override
     public void mouseReleased(int x, int y) {
-        bottomBar.mouseReleased(x,y);
+        actionBar.mouseReleased(x,y);
+    }
+
+    @Override
+    public void mouseDragged(int x, int y) {
     }
 }

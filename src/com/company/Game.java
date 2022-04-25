@@ -1,12 +1,14 @@
 package com.company;
 
-import inputs.KeyboardListener;
-import inputs.NewMouseListener;
+import handlers.TileHandler;
+import helperMethods.LoadSave;
+import scenes.Edit;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 public class Game extends JFrame implements Runnable {
 
@@ -19,25 +21,38 @@ public class Game extends JFrame implements Runnable {
     private Render render;
     private Menu menu;
     private Playing playing;
+    private Edit edit;
     private Settings settings;
 
+    private TileHandler tileHandler;
     public Game() {
+        initClasses();
+        createDefaultLvl();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        initClasses();
+
         add(gameScreen);
         pack();
         setVisible(true);
     }
 
     private void initClasses() {
+        tileHandler = new TileHandler();
         render = new Render(this);
         gameScreen = new GameScreen(this);
         menu = new Menu(this);
+        edit = new Edit(this);
         playing = new Playing(this);
         settings = new Settings(this);
+    }
+
+    private void createDefaultLvl() {
+        int[] arr = new int[400];
+        Arrays.fill(arr, 1);
+
+        LoadSave.createDefaultLvl("new_lvl",arr);
     }
 
     private void start() {
@@ -70,13 +85,11 @@ public class Game extends JFrame implements Runnable {
 
         while (true) {
             now = System.nanoTime();
-            //Render
             if (now - lastFrame >= timePerFrame) {
                 repaint();
                 lastFrame = now;
                 frames++;
             }
-            //Update
             if (now - lastUpdate >= timePerUpdate) {
                 update();
                 lastUpdate = now;
@@ -106,5 +119,13 @@ public class Game extends JFrame implements Runnable {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public Edit getEdit() {
+        return edit;
+    }
+
+    public TileHandler getTileHandler() {
+        return tileHandler;
     }
 }

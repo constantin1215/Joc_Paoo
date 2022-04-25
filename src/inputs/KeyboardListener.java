@@ -1,5 +1,6 @@
 package inputs;
 
+import com.company.Game;
 import com.company.GameStates;
 
 import java.awt.event.KeyEvent;
@@ -8,6 +9,11 @@ import java.awt.event.KeyListener;
 import static com.company.GameStates.*;
 
 public class KeyboardListener implements KeyListener {
+    private Game game;
+    public KeyboardListener(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -15,12 +21,9 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_A)
-            GameStates.gameStates = MENU;
-        else if (e.getKeyCode() == KeyEvent.VK_S)
-            GameStates.gameStates = PLAYING;
-        else if (e.getKeyCode() == KeyEvent.VK_D)
-            GameStates.gameStates = SETTINGS;
+        if (gameStates == EDIT) {
+            game.getEdit().keyPressed(e);
+        }
     }
 
     @Override

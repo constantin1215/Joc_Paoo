@@ -72,8 +72,16 @@ public class Bttn {
         this.mouseOver = mouseOver;
     }
 
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
+
     public void setMousePressed(boolean mousePressed) {
         this.mousePressed = mousePressed;
+    }
+
+    public boolean isMousePressed() {
+        return mousePressed;
     }
 
     public void resetBool() {
