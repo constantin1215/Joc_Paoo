@@ -54,4 +54,25 @@ public class SpriteDirection {
 
         return newImg;
     }
+
+    public static BufferedImage[] getBuildRotatedImg(BufferedImage[] images, BufferedImage ground, int rotation) {
+        int width = images[0].getWidth();
+        int height = images[0].getHeight();
+
+        BufferedImage[] arr = new BufferedImage[images.length];
+
+        for (int i = 0 ;i < images.length; i++) {
+            BufferedImage newImg = new BufferedImage(width,height,images[0].getType());
+            Graphics2D g2d = newImg.createGraphics();
+
+            g2d.drawImage(images[i],0,0,null);
+            g2d.rotate(Math.toRadians(rotation),width/2,height/2);
+            g2d.drawImage(ground,0,0,null);
+            g2d.dispose();
+
+            arr[i] = newImg;
+        }
+
+        return arr;
+    }
 }

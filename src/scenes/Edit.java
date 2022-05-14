@@ -3,11 +3,14 @@ package scenes;
 import UI.ToolBar;
 import com.company.Game;
 import helperMethods.LoadSave;
+import objects.PathPoint;
 import objects.Tile;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static helperMethods.Constants.Tiles.ROAD_TILE;
 
 public class Edit extends GameScene implements SceneMethods{
     private int[][] lvl;
@@ -16,15 +19,19 @@ public class Edit extends GameScene implements SceneMethods{
     private int lastTileX, lastTileY, lastTilelId;
     private boolean drawSelect;
     private ToolBar toolBar;
+    public PathPoint start, finish;
 
     public Edit(Game game) {
         super(game);
         loadDefaultLvl();
-        toolBar = new ToolBar(0,640,640,100, this);
+        toolBar = new ToolBar(0,640,640,160, this);
     }
 
     private void loadDefaultLvl() {
-        lvl = LoadSave.readLevelData("new_lvl");
+        lvl = LoadSave.readLvlData("new_lvl");
+        ArrayList<PathPoint> points = LoadSave.getLvlPathPoint("new_lvl");
+        start = points.get(0);
+        finish = points.get(1);
     }
 
     @Override
@@ -32,19 +39,33 @@ public class Edit extends GameScene implements SceneMethods{
         drawLvl(g);
         toolBar.draw(g);
         drawSelectedTile(g);
+        drawPathPoints(g);
+    }
+
+    private void drawPathPoints(Graphics g) {
+        if (start != null) {
+            g.drawImage(toolBar.getImgStart(), start.getX()*32, start.getY()*32,null);
+        }
+
+        if (finish != null) {
+            g.drawImage(toolBar.getImgFinish(), finish.getX()*32, finish.getY()*32,null);
+        }
+    }
+
+    public void update() {
+        updateTick();
     }
 
     private void drawLvl(Graphics g) {
         for (int i = 0; i < lvl.length; i++){
             for (int j = 0; j < lvl.length; j++) {
                 int id = lvl[i][j];
-                g.drawImage(getSprite(id),j*32,i*32,null);
+                if (isAnimated(id)) {
+                    g.drawImage(getSprite(id, animationIndex),j*32,i*32,null);
+                } else
+                    g.drawImage(getSprite(id),j*32,i*32,null);
             }
         }
-    }
-
-    private BufferedImage getSprite(int id) {
-        return getGame().getTileHandler().getSprite(id);
     }
 
 
@@ -55,7 +76,7 @@ public class Edit extends GameScene implements SceneMethods{
     }
 
     public void saveLvl() {
-        LoadSave.saveLvl("new_lvl",lvl);
+        LoadSave.saveLvl("new_lvl", lvl, start, finish);
         getGame().getPlaying().setLevel(lvl);
     }
 
@@ -69,15 +90,24 @@ public class Edit extends GameScene implements SceneMethods{
         if (selectedTile != null) {
             int tileX = x / 32;
             int tileY = y / 32;
+            if (selectedTile.getId() >= 0) {
+                if (lastTileX == tileX && lastTileY == tileY && lastTilelId == selectedTile.getId())
+                    return;
 
-            if (lastTileX == tileX && lastTileY == tileY && lastTilelId == selectedTile.getId())
-                return;
+                lastTileX = tileX;
+                lastTileY = tileY;
+                lastTilelId = selectedTile.getId();
 
-            lastTileX = tileX;
-            lastTileY = tileY;
-            lastTilelId = selectedTile.getId();
-
-            lvl[tileY][tileX] = selectedTile.getId();
+                lvl[tileY][tileX] = selectedTile.getId();
+            }else {
+                int id = lvl[tileY][tileX];
+                if (getGame().getTileHandler().getTile(id).getType() == ROAD_TILE) {
+                    if (selectedTile.getId() == -1)
+                        start = new PathPoint(tileX,tileY);
+                    else
+                        finish = new PathPoint(tileX,tileY);
+                }
+            }
         }
     }
 

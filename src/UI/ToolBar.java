@@ -1,10 +1,12 @@
 package UI;
 
+import helperMethods.LoadSave;
 import objects.Tile;
 import scenes.Edit;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,8 @@ import static com.company.GameStates.SetGameState;
 public class ToolBar extends Bar{
     private Edit edit;
     private Bttn bMenu, bSave;
+    private Bttn bStart, bFinish;
+    private BufferedImage imgStart, imgFinish;
     private Tile selectedTile;
 
     private Map<Bttn, ArrayList<Tile>> map = new HashMap<Bttn,ArrayList<Tile>>();
@@ -27,8 +31,13 @@ public class ToolBar extends Bar{
     public ToolBar(int x, int y, int width, int height, Edit edit) {
         super(x, y, width, height);
         this.edit = edit;
-
+        initStartFinishImg();
         initButtons();
+    }
+
+    private void initStartFinishImg() {
+        imgStart = LoadSave.getSpriteAtlas().getSubimage(7*32,2*32,32,32);
+        imgFinish = LoadSave.getSpriteAtlas().getSubimage(8*32,2*32,32,32);
     }
 
     private void initButtons() {
@@ -50,6 +59,8 @@ public class ToolBar extends Bar{
         bindMapButton(bWaterC, edit.getGame().getTileHandler().getWaterC(),xStart, yStart,offSet,w,h,i++);
         bindMapButton(bWaterB, edit.getGame().getTileHandler().getBeaches(),xStart, yStart,offSet,w,h,i++);
         bindMapButton(bWaterI, edit.getGame().getTileHandler().getIslands(),xStart, yStart,offSet,w,h,i++);
+        bStart = new Bttn("Start",xStart, yStart + offSet,w,h,i++);
+        bFinish = new Bttn("Finish",xStart + offSet, yStart + offSet,w,h,i);
     }
 
     private void bindMapButton(Bttn b,ArrayList<Tile> list, int x, int y, int offSet, int w, int h, int id) {
@@ -79,11 +90,19 @@ public class ToolBar extends Bar{
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
         bSave.draw(g);
+
+        drawPathBtn(g,bStart, imgStart);
+        drawPathBtn(g,bFinish, imgFinish);
         
         drawSimpleBtn(g, bGrass);
         drawSimpleBtn(g, bWater);
         drawSelectedTile(g);
         drawMapButtons(g);
+    }
+
+    private void drawPathBtn(Graphics g, Bttn btn, BufferedImage img) {
+        g.drawImage(img, btn.x, btn.y, btn.width, btn.height, null);
+        btnAnimation(g,btn);
     }
 
     private void drawSimpleBtn(Graphics g, Bttn btn) {
@@ -133,6 +152,8 @@ public class ToolBar extends Bar{
         bSave.setMouseOver(false);
         bGrass.setMouseOver(false);
         bWater.setMouseOver(false);
+        bStart.setMouseOver(false);
+        bFinish.setMouseOver(false);
         for (Bttn btn : map.keySet())
             btn.setMouseOver(false);
 
@@ -144,6 +165,10 @@ public class ToolBar extends Bar{
             bGrass.setMouseOver(true);
         else if(bWater.getLimits().contains(x,y))
             bWater.setMouseOver(true);
+        else if(bStart.getLimits().contains(x,y))
+            bStart.setMouseOver(true);
+        else if(bFinish.getLimits().contains(x,y))
+            bFinish.setMouseOver(true);
         else {
             for (Bttn btn : map.keySet()) {
                 if (btn.getLimits().contains(x, y)) {
@@ -168,6 +193,14 @@ public class ToolBar extends Bar{
             selectedTile = edit.getGame().getTileHandler().getTile(bWater.getId());
             edit.setSelectedTile(selectedTile);
         }
+        else if(bStart.getLimits().contains(x,y)) {
+            selectedTile = new Tile(imgStart,-1,-1);
+            edit.setSelectedTile(selectedTile);
+        }
+        else if(bFinish.getLimits().contains(x,y)) {
+            selectedTile = new Tile(imgFinish,-2,-2);
+            edit.setSelectedTile(selectedTile);
+        }
         else {
             for (Bttn btn : map.keySet()) {
                 if (btn.getLimits().contains(x,y)) {
@@ -190,6 +223,10 @@ public class ToolBar extends Bar{
             bGrass.setMousePressed(true);
         else if(bWater.getLimits().contains(x,y))
             bWater.setMousePressed(true);
+        else if(bStart.getLimits().contains(x,y))
+            bStart.setMousePressed(true);
+        else if(bFinish.getLimits().contains(x,y))
+            bFinish.setMousePressed(true);
         else {
             for (Bttn btn : map.keySet())
                 if (btn.getLimits().contains(x,y)) {
@@ -203,8 +240,26 @@ public class ToolBar extends Bar{
         bMenu.resetBool();
         bSave.resetBool();
         bGrass.resetBool();
-        bGrass.resetBool();
+        bWater.resetBool();
+        bStart.resetBool();
+        bFinish.resetBool();
         for (Bttn btn : map.keySet())
             btn.resetBool();
+    }
+
+    public BufferedImage getImgStart() {
+        return imgStart;
+    }
+
+    public void setImgStart(BufferedImage imgStart) {
+        this.imgStart = imgStart;
+    }
+
+    public BufferedImage getImgFinish() {
+        return imgFinish;
+    }
+
+    public void setImgFinish(BufferedImage imgFinish) {
+        this.imgFinish = imgFinish;
     }
 }
