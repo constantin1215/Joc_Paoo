@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class GameScene {
 
-    private Game game;
+    private final Game game;
 
     protected int animationIndex;
     protected int tick;
@@ -23,8 +23,8 @@ public class GameScene {
     protected void updateTick() {
         tick++;
         if (tick >= ANIMATION_SPEED) {
-            tick=0;
-            animationIndex ++;
+            tick = 0;
+            animationIndex++;
             if (animationIndex >= 4)
                 animationIndex = 0;
         }

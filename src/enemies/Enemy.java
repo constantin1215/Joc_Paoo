@@ -1,15 +1,18 @@
 package enemies;
 
 import java.awt.*;
+
 import static helperMethods.Constants.Direction.*;
+import static helperMethods.Constants.Enemies.getStartHealth;
 
 public abstract class Enemy {
-    private float x,y;
-    private Rectangle bounds;
-    private int health;
-    private int id;
-    private int enemyType;
-    private int lastDirection;
+    protected float x, y;
+    protected final Rectangle bounds;
+    protected int health;
+    protected int maxHealth;
+    protected final int id;
+    protected final int enemyType;
+    protected int lastDirection;
 
     public Enemy(float x, float y, int id, int enemyType) {
         this.x = x;
@@ -18,6 +21,16 @@ public abstract class Enemy {
         this.enemyType = enemyType;
         bounds = new Rectangle((int) x, (int) y, 32, 32);
         lastDirection = -1;
+        setStartHealth();
+    }
+
+    public float getHealthBar() {
+        return (float) health / maxHealth;
+    }
+
+    private void setStartHealth() {
+        health = getStartHealth(enemyType);
+        maxHealth = health;
     }
 
     public void move(float speed, int direction) {

@@ -3,12 +3,12 @@ package UI;
 import java.awt.*;
 
 public class Bttn {
-    public int x,y,width,height, id;
-    private String text;
+    public int x, y, width, height, id;
+    private final String text;
     private Rectangle limits;
     private boolean mouseOver, mousePressed;
 
-    public Bttn(String text,int x, int y, int width, int height) {
+    public Bttn(String text, int x, int y, int width, int height) {
         this.text = text;
         this.x = x;
         this.y = y;
@@ -19,7 +19,7 @@ public class Bttn {
         initLimits();
     }
 
-    public Bttn(String text,int x, int y, int width, int height, int id) {
+    public Bttn(String text, int x, int y, int width, int height, int id) {
         this.text = text;
         this.x = x;
         this.y = y;
@@ -31,7 +31,7 @@ public class Bttn {
     }
 
     private void initLimits() {
-        this.limits = new Rectangle(x,y,width,height);
+        this.limits = new Rectangle(x, y, width, height);
     }
 
     public void draw(Graphics g) {
@@ -42,10 +42,10 @@ public class Bttn {
 
     private void drawBorder(Graphics g) {
         g.setColor(Color.blue);
-        g.drawRect(x,y,width,height);
+        g.drawRect(x, y, width, height);
         if (mousePressed) {
-            g.drawRect(x+1,y+1,width - 2,height - 2);
-            g.drawRect(x+2,y+2,width - 4,height - 4);
+            g.drawRect(x + 1, y + 1, width - 2, height - 2);
+            g.drawRect(x + 2, y + 2, width - 4, height - 4);
         }
     }
 
@@ -54,14 +54,14 @@ public class Bttn {
             g.setColor(Color.red);
         else
             g.setColor(Color.yellow);
-        g.fillRect(x,y,width,height);
+        g.fillRect(x, y, width, height);
     }
 
     private void drawText(Graphics g) {
         int txtWidth = g.getFontMetrics().stringWidth(text);
         int txtHeight = g.getFontMetrics().getHeight();
 
-        g.drawString(text,x + width/2 - txtWidth/2,y + height/2 + txtHeight/2);
+        g.drawString(text, x + width / 2 - txtWidth / 2, y + height / 2 + txtHeight / 2);
     }
 
     public Rectangle getLimits() {

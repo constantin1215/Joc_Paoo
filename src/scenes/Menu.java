@@ -3,16 +3,11 @@ package scenes;
 import UI.Bttn;
 import com.company.Game;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
 
 import static com.company.GameStates.*;
 
-public class Menu extends GameScene implements SceneMethods{
+public class Menu extends GameScene implements SceneMethods {
     private Bttn bPlay, bEdit, bSettings, bQuit;
 
     public Menu(Game game) {
@@ -22,15 +17,15 @@ public class Menu extends GameScene implements SceneMethods{
 
     private void initButtons() {
         int w = 150;
-        int h = w/3;
-        int x = 640/2 - w/2;
+        int h = w / 3;
+        int x = 640 / 2 - w / 2;
         int y = 150;
         int offSet = 100;
 
-        bPlay = new Bttn("Play", x,y,w,h);
-        bEdit = new Bttn("Edit",x,y+offSet,w,h);
-        bSettings = new Bttn("Settings",x,y+2*offSet,w,h);
-        bQuit = new Bttn("Quit",x,y+3*offSet,w,h);
+        bPlay = new Bttn("Play", x, y, w, h);
+        bEdit = new Bttn("Edit", x, y + offSet, w, h);
+        bSettings = new Bttn("Settings", x, y + 2 * offSet, w, h);
+        bQuit = new Bttn("Quit", x, y + 3 * offSet, w, h);
     }
 
     @Override
@@ -47,13 +42,13 @@ public class Menu extends GameScene implements SceneMethods{
 
     @Override
     public void mouseClicked(int x, int y) {
-        if (bPlay.getLimits().contains(x,y))
+        if (bPlay.getLimits().contains(x, y))
             SetGameState(PLAYING);
-        else if(bEdit.getLimits().contains(x,y))
+        else if (bEdit.getLimits().contains(x, y))
             SetGameState(EDIT);
-        else if (bSettings.getLimits().contains(x,y))
+        else if (bSettings.getLimits().contains(x, y))
             SetGameState(SETTINGS);
-        else if (bQuit.getLimits().contains(x,y))
+        else if (bQuit.getLimits().contains(x, y))
             System.exit(0);
     }
 
@@ -63,25 +58,25 @@ public class Menu extends GameScene implements SceneMethods{
         bEdit.setMouseOver(false);
         bSettings.setMouseOver(false);
         bQuit.setMouseOver(false);
-        if (bPlay.getLimits().contains(x,y))
+        if (bPlay.getLimits().contains(x, y))
             bPlay.setMouseOver(true);
-        else if (bEdit.getLimits().contains(x,y))
+        else if (bEdit.getLimits().contains(x, y))
             bEdit.setMouseOver(true);
-        else if (bSettings.getLimits().contains(x,y))
+        else if (bSettings.getLimits().contains(x, y))
             bSettings.setMouseOver(true);
-        else if (bQuit.getLimits().contains(x,y))
+        else if (bQuit.getLimits().contains(x, y))
             bQuit.setMouseOver(true);
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        if (bPlay.getLimits().contains(x,y))
+        if (bPlay.getLimits().contains(x, y))
             bPlay.setMousePressed(true);
-        else if (bEdit.getLimits().contains(x,y))
+        else if (bEdit.getLimits().contains(x, y))
             bEdit.setMousePressed(true);
-        else if (bSettings.getLimits().contains(x,y))
+        else if (bSettings.getLimits().contains(x, y))
             bSettings.setMousePressed(true);
-        else if (bQuit.getLimits().contains(x,y))
+        else if (bQuit.getLimits().contains(x, y))
             bQuit.setMousePressed(true);
     }
 

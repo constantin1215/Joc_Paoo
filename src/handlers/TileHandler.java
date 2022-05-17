@@ -5,7 +5,6 @@ import helperMethods.SpriteDirection;
 import objects.Tile;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static helperMethods.Constants.Tiles.*;
@@ -29,41 +28,41 @@ public class TileHandler {
 
     private void createTiles() {
         int id = 0;
-        tiles.add(GRASS = new Tile(getSprite(9,0),id++,GRASS_TILE));
-        tiles.add(WATER = new Tile(getAnimatedSprite(0,0),id++,WATER_TILE));
+        tiles.add(GRASS = new Tile(getSprite(9, 0), id++, GRASS_TILE));
+        tiles.add(WATER = new Tile(getAnimatedSprite(0, 0), id++, WATER_TILE));
 
-        roads.add(ROAD_1 = new Tile(getSprite(8,0),id++,ROAD_TILE));
-        roads.add(ROAD_2 = new Tile(SpriteDirection.getRotataedImg(getSprite(8,0),90),id++,ROAD_TILE));
+        roads.add(ROAD_1 = new Tile(getSprite(8, 0), id++, ROAD_TILE));
+        roads.add(ROAD_2 = new Tile(SpriteDirection.getRotataedImg(getSprite(8, 0), 90), id++, ROAD_TILE));
 
-        roadsC.add(ROADC_1 = new Tile(getSprite(7,0),id++,ROAD_TILE));
-        roadsC.add(ROADC_2 = new Tile(SpriteDirection.getRotataedImg(getSprite(7,0),90),id++,ROAD_TILE));
-        roadsC.add(ROADC_3 = new Tile(SpriteDirection.getRotataedImg(getSprite(7,0),180),id++,ROAD_TILE));
-        roadsC.add(ROADC_4 = new Tile(SpriteDirection.getRotataedImg(getSprite(7,0),270),id++,ROAD_TILE));
+        roadsC.add(ROADC_1 = new Tile(getSprite(7, 0), id++, ROAD_TILE));
+        roadsC.add(ROADC_2 = new Tile(SpriteDirection.getRotataedImg(getSprite(7, 0), 90), id++, ROAD_TILE));
+        roadsC.add(ROADC_3 = new Tile(SpriteDirection.getRotataedImg(getSprite(7, 0), 180), id++, ROAD_TILE));
+        roadsC.add(ROADC_4 = new Tile(SpriteDirection.getRotataedImg(getSprite(7, 0), 270), id++, ROAD_TILE));
 
-        waterC.add(WTR_CORNER_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(5,0),0),id++,WATER_TILE));
-        waterC.add(WTR_CORNER_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(5,0),90),id++,WATER_TILE));
-        waterC.add(WTR_CORNER_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(5,0),180),id++,WATER_TILE));
-        waterC.add(WTR_CORNER_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(5,0),270),id++,WATER_TILE));
+        waterC.add(WTR_CORNER_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(5, 0), 0), id++, WATER_TILE));
+        waterC.add(WTR_CORNER_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(5, 0), 90), id++, WATER_TILE));
+        waterC.add(WTR_CORNER_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(5, 0), 180), id++, WATER_TILE));
+        waterC.add(WTR_CORNER_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(5, 0), 270), id++, WATER_TILE));
 
 //        waterC.add(WTR_CORNER_1 = new Tile(SpriteDirection.buildImg(getImgs(0,0,5,0)),id++,"Water Corner"));
 //        waterC.add(WTR_CORNER_2 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,5,0),90,1),id++,"Water Corner 2"));
 //        waterC.add(WTR_CORNER_3 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,5,0),180,1),id++,"Water Corner 3"));
 //        waterC.add(WTR_CORNER_4 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,5,0),270,1),id++,"Water Corner 4"));
 
-        beaches.add(WTR_B_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(6,0),0),id++,WATER_TILE));
-        beaches.add(WTR_B_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(6,0),90),id++,WATER_TILE));
-        beaches.add(WTR_B_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(6,0),180),id++,WATER_TILE));
-        beaches.add(WTR_B_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(6,0),270),id++,WATER_TILE));
+        beaches.add(WTR_B_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(6, 0), 0), id++, WATER_TILE));
+        beaches.add(WTR_B_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(6, 0), 90), id++, WATER_TILE));
+        beaches.add(WTR_B_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(6, 0), 180), id++, WATER_TILE));
+        beaches.add(WTR_B_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(6, 0), 270), id++, WATER_TILE));
 
 //        beaches.add(WTR_B_1 = new Tile(SpriteDirection.buildImg(getImgs(0,0,6,0)),id++,"Water Beach 1"));
 //        beaches.add(WTR_B_2 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,6,0),90,1),id++,"Water Beach 2"));
 //        beaches.add(WTR_B_3 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,6,0),180,1),id++,"Water Beach 3"));
 //        beaches.add(WTR_B_4 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,6,0),270,1),id++,"Water Beach 4"));
 
-        islands.add(WTR_I_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(4,0),0),id++,WATER_TILE));
-        islands.add(WTR_I_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(4,0),90),id++,WATER_TILE));
-        islands.add(WTR_I_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(4,0),180),id++,WATER_TILE));
-        islands.add(WTR_I_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0,0), getSprite(4,0),270),id,WATER_TILE));
+        islands.add(WTR_I_1 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(4, 0), 0), id++, WATER_TILE));
+        islands.add(WTR_I_2 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(4, 0), 90), id++, WATER_TILE));
+        islands.add(WTR_I_3 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(4, 0), 180), id++, WATER_TILE));
+        islands.add(WTR_I_4 = new Tile(SpriteDirection.getBuildRotatedImg(getAnimatedSprite(0, 0), getSprite(4, 0), 270), id, WATER_TILE));
 
 //        islands.add(WTR_I_1 = new Tile(SpriteDirection.buildImg(getImgs(0,0,4,0)),id++,"Water Island 1"));
 //        islands.add(WTR_I_2 = new Tile(SpriteDirection.getBuildRotatedImg(getImgs(0,0,4,0),90,1),id++,"Water Island 2"));
@@ -78,7 +77,7 @@ public class TileHandler {
     }
 
     private BufferedImage[] getImgs(int coordX1, int coordY1, int coordX2, int coordY2) {
-        return new BufferedImage[]{ getSprite(coordX1,coordY1),getSprite(coordX2,coordY2) };
+        return new BufferedImage[]{getSprite(coordX1, coordY1), getSprite(coordX2, coordY2)};
     }
 
     private void loadAtlas() {
@@ -94,7 +93,7 @@ public class TileHandler {
     }
 
     private BufferedImage getSprite(int x, int y) {
-        return atlas.getSubimage(x*32,y*32,32,32);
+        return atlas.getSubimage(x * 32, y * 32, 32, 32);
     }
 
     public BufferedImage getAnimatedSpriteAtIndex(int id, int animationIndex) {
@@ -103,7 +102,7 @@ public class TileHandler {
 
     private BufferedImage[] getAnimatedSprite(int x, int y) {
         BufferedImage[] animation = new BufferedImage[4];
-        for (int i = 0;i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             animation[i] = getSprite(x + i, y);
         }
 

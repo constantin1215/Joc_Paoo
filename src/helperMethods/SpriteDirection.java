@@ -8,11 +8,11 @@ public class SpriteDirection {
         int width = img.getWidth();
         int height = img.getHeight();
 
-        BufferedImage newImg = new BufferedImage(width,height,img.getType());
+        BufferedImage newImg = new BufferedImage(width, height, img.getType());
         Graphics2D g2d = newImg.createGraphics();
 
-        g2d.rotate(Math.toRadians(rotation),width/2,height/2);
-        g2d.drawImage(img,0,0,null);
+        g2d.rotate(Math.toRadians(rotation), width / 2, height / 2);
+        g2d.drawImage(img, 0, 0, null);
 
         g2d.dispose();
 
@@ -23,11 +23,11 @@ public class SpriteDirection {
         int width = images[0].getWidth();
         int height = images[0].getHeight();
 
-        BufferedImage newImg = new BufferedImage(width,height,images[0].getType());
+        BufferedImage newImg = new BufferedImage(width, height, images[0].getType());
         Graphics2D g2d = newImg.createGraphics();
 
         for (BufferedImage img : images) {
-            g2d.drawImage(img,0,0,null);
+            g2d.drawImage(img, 0, 0, null);
         }
 
         g2d.dispose();
@@ -39,15 +39,15 @@ public class SpriteDirection {
         int width = images[0].getWidth();
         int height = images[0].getHeight();
 
-        BufferedImage newImg = new BufferedImage(width,height,images[0].getType());
+        BufferedImage newImg = new BufferedImage(width, height, images[0].getType());
         Graphics2D g2d = newImg.createGraphics();
 
-        for (int i = 0; i < images.length;i++) {
+        for (int i = 0; i < images.length; i++) {
             if (imgToRotate == i)
-                g2d.rotate(Math.toRadians(rotation),width/2,height/2);
-            g2d.drawImage(images[i],0,0,null);
+                g2d.rotate(Math.toRadians(rotation), width / 2, height / 2);
+            g2d.drawImage(images[i], 0, 0, null);
             if (imgToRotate == i)
-                g2d.rotate(Math.toRadians(-rotation),width/2,height/2);
+                g2d.rotate(Math.toRadians(-rotation), width / 2, height / 2);
         }
 
         g2d.dispose();
@@ -61,13 +61,13 @@ public class SpriteDirection {
 
         BufferedImage[] arr = new BufferedImage[images.length];
 
-        for (int i = 0 ;i < images.length; i++) {
-            BufferedImage newImg = new BufferedImage(width,height,images[0].getType());
+        for (int i = 0; i < images.length; i++) {
+            BufferedImage newImg = new BufferedImage(width, height, images[0].getType());
             Graphics2D g2d = newImg.createGraphics();
 
-            g2d.drawImage(images[i],0,0,null);
-            g2d.rotate(Math.toRadians(rotation),width/2,height/2);
-            g2d.drawImage(ground,0,0,null);
+            g2d.drawImage(images[i], 0, 0, null);
+            g2d.rotate(Math.toRadians(rotation), width / 2, height / 2);
+            g2d.drawImage(ground, 0, 0, null);
             g2d.dispose();
 
             arr[i] = newImg;

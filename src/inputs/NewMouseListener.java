@@ -9,7 +9,8 @@ import java.awt.event.MouseMotionListener;
 
 public class NewMouseListener implements MouseListener, MouseMotionListener {
 
-    private Game game;
+    private final Game game;
+
     public NewMouseListener(Game game) {
         this.game = game;
     }
@@ -20,7 +21,7 @@ public class NewMouseListener implements MouseListener, MouseMotionListener {
             switch (GameStates.gameStates) {
                 case MENU -> game.getMenu().mouseClicked(e.getX(), e.getY());
                 case PLAYING -> game.getPlaying().mouseClicked(e.getX(), e.getY());
-                case EDIT -> game.getEdit().mouseClicked(e.getX(),e.getY());
+                case EDIT -> game.getEdit().mouseClicked(e.getX(), e.getY());
                 case SETTINGS -> game.getSettings().mouseClicked(e.getX(), e.getY());
                 default -> {
                 }
@@ -34,7 +35,7 @@ public class NewMouseListener implements MouseListener, MouseMotionListener {
         switch (GameStates.gameStates) {
             case MENU -> game.getMenu().mousePressed(e.getX(), e.getY());
             case PLAYING -> game.getPlaying().mousePressed(e.getX(), e.getY());
-            case EDIT -> game.getEdit().mousePressed(e.getX(),e.getY());
+            case EDIT -> game.getEdit().mousePressed(e.getX(), e.getY());
             case SETTINGS -> game.getSettings().mousePressed(e.getX(), e.getY());
             default -> {
             }
@@ -46,7 +47,7 @@ public class NewMouseListener implements MouseListener, MouseMotionListener {
         switch (GameStates.gameStates) {
             case MENU -> game.getMenu().mouseReleased(e.getX(), e.getY());
             case PLAYING -> game.getPlaying().mouseReleased(e.getX(), e.getY());
-            case EDIT -> game.getEdit().mouseReleased(e.getX(),e.getY());
+            case EDIT -> game.getEdit().mouseReleased(e.getX(), e.getY());
             case SETTINGS -> game.getSettings().mouseReleased(e.getX(), e.getY());
             default -> {
             }
@@ -68,7 +69,7 @@ public class NewMouseListener implements MouseListener, MouseMotionListener {
         switch (GameStates.gameStates) {
             case MENU -> game.getMenu().mouseDragged(e.getX(), e.getY());
             case PLAYING -> game.getPlaying().mouseDragged(e.getX(), e.getY());
-            case EDIT -> game.getEdit().mouseDragged(e.getX(),e.getY());
+            case EDIT -> game.getEdit().mouseDragged(e.getX(), e.getY());
             case SETTINGS -> game.getSettings().mouseDragged(e.getX(), e.getY());
             default -> {
             }
@@ -80,7 +81,7 @@ public class NewMouseListener implements MouseListener, MouseMotionListener {
         switch (GameStates.gameStates) {
             case MENU -> game.getMenu().mouseMoved(e.getX(), e.getY());
             case PLAYING -> game.getPlaying().mouseMoved(e.getX(), e.getY());
-            case EDIT -> game.getEdit().mouseMoved(e.getX(),e.getY());
+            case EDIT -> game.getEdit().mouseMoved(e.getX(), e.getY());
             case SETTINGS -> game.getSettings().mouseMoved(e.getX(), e.getY());
             default -> {
             }

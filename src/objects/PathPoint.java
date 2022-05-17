@@ -1,7 +1,8 @@
 package objects;
 
 public class PathPoint {
-    private int x,y;
+    private int x, y;
+
     public PathPoint(int x, int y) {
         this.x = x;
         this.y = y;

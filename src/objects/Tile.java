@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Tile {
 
-    private BufferedImage[] sprite;
-    private int id;
-    private int type;
+    private final BufferedImage[] sprite;
+    private final int id;
+    private final int type;
 
     public Tile(BufferedImage sprite, int id, int type) {
         this.sprite = new BufferedImage[1];

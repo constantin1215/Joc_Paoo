@@ -15,7 +15,7 @@ public class LoadSave {
             InputStream is = new BufferedInputStream(new FileInputStream("resources/spriteatlas.png"));
             img = ImageIO.read(is);
             return img;
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         throw new RuntimeException("Can't load img");
@@ -41,11 +41,11 @@ public class LoadSave {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            writeData(newLvl,idArr, new PathPoint(0,0), new PathPoint(0,0));
+            writeData(newLvl, idArr, new PathPoint(0, 0), new PathPoint(0, 0));
         }
     }
 
-    private static void writeData(File f,int[] idArr, PathPoint start, PathPoint finish) {
+    private static void writeData(File f, int[] idArr, PathPoint start, PathPoint finish) {
         try {
             PrintWriter w = new PrintWriter(f);
             for (int i : idArr)
@@ -66,7 +66,7 @@ public class LoadSave {
         File newLvl = new File("Levels/" + name + ".txt");
 
         if (newLvl.exists()) {
-            writeData(newLvl,Utility.matrixToArr(lvl), start, finish);
+            writeData(newLvl, Utility.matrixToArr(lvl), start, finish);
         } else {
             System.out.println("(Eroare saveLvl)Nivelul: " + name + " nu exista");
         }
@@ -99,8 +99,8 @@ public class LoadSave {
             points.add(new PathPoint(list.get(402), list.get(403)));
 
             return points;
-        }else {
-            System.out.println("Nivelul: " + name +" nu exista!");
+        } else {
+            System.out.println("Nivelul: " + name + " nu exista!");
             return null;
         }
     }
@@ -110,9 +110,9 @@ public class LoadSave {
 
         if (newLvl.exists()) {
             ArrayList<Integer> list = readData(newLvl);
-            return Utility.arrayListToMatrix(list,20,20);
-        }else {
-            System.out.println("Nivelul: " + name +" nu exista!");
+            return Utility.arrayListToMatrix(list, 20, 20);
+        } else {
+            System.out.println("Nivelul: " + name + " nu exista!");
             return null;
         }
     }

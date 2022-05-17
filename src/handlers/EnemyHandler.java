@@ -11,14 +11,15 @@ import java.util.ArrayList;
 
 import static helperMethods.Constants.Direction.*;
 import static helperMethods.Constants.Enemies.*;
-import static helperMethods.Constants.Tiles.*;
+import static helperMethods.Constants.Tiles.ROAD_TILE;
 
 public class EnemyHandler {
-    private Playing playing;
-    private BufferedImage[] enemyImgs;
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-    private float speed = 0.5f;
-    private PathPoint start, finish;
+    private final Playing playing;
+    private final BufferedImage[] enemyImgs;
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private final PathPoint start;
+    private final PathPoint finish;
+    private int HP_BAR_W = 26;
 
     public EnemyHandler(Playing playing, PathPoint start, PathPoint finish) {
         this.playing = playing;
@@ -36,8 +37,8 @@ public class EnemyHandler {
     private void loadEnemyImg() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
 
-        for (int i = 0 ; i < 4; i++) {
-            enemyImgs[i] = atlas.getSubimage(32*i,32,32,32);
+        for (int i = 0; i < 4; i++) {
+            enemyImgs[i] = atlas.getSubimage(32 * i, 32, 32, 32);
         }
     }
 
@@ -47,10 +48,10 @@ public class EnemyHandler {
         int y = start.getY() * 32;
 
         switch (enemyType) {
-            case RED -> enemies.add(new RedBaloon(x,y,0));
-            case BLUE -> enemies.add(new BlueBaloon(x,y,0));
-            case GREEN -> enemies.add(new GreenBaloon(x,y,0));
-            case YELLOW -> enemies.add(new YellowBaloon(x,y,0));
+            case RED -> enemies.add(new RedBaloon(x, y, 0));
+            case BLUE -> enemies.add(new BlueBaloon(x, y, 0));
+            case GREEN -> enemies.add(new GreenBaloon(x, y, 0));
+            case YELLOW -> enemies.add(new YellowBaloon(x, y, 0));
         }
 
     }
@@ -64,12 +65,12 @@ public class EnemyHandler {
         if (enemy.getLastDirection() == -1)
             setNewDirectionAndMove(enemy);
 
-        int newX = (int)(enemy.getX() + getSpeedAndWidth(enemy.getLastDirection()));
-        int newY = (int)(enemy.getY() + getSpeedAndHeight(enemy.getLastDirection()));
+        int newX = (int) (enemy.getX() + getSpeedAndWidth(enemy.getLastDirection(), enemy.getEnemyType()));
+        int newY = (int) (enemy.getY() + getSpeedAndHeight(enemy.getLastDirection(), enemy.getEnemyType()));
 
-        if (getTileType(newX,newY) == ROAD_TILE) {
-            enemy.move(speed, enemy.getLastDirection());
-        } else if(isAtEnd(enemy)) {
+        if (getTileType(newX, newY) == ROAD_TILE) {
+            enemy.move(getEnemySpeed(enemy.getEnemyType()), enemy.getLastDirection());
+        } else if (isAtEnd(enemy)) {
             System.out.println("-1 Lives");
         } else {
             setNewDirectionAndMove(enemy);
@@ -88,17 +89,17 @@ public class EnemyHandler {
             return;
 
         if (dir == LEFT || dir == RIGHT) {
-            int newY = (int)(enemy.getY() + getSpeedAndHeight(UP));
+            int newY = (int) (enemy.getY() + getSpeedAndHeight(UP, enemy.getEnemyType()));
             if (getTileType((int) enemy.getX(), newY) == ROAD_TILE)
-                enemy.move(speed, UP);
+                enemy.move(getEnemySpeed(enemy.getEnemyType()), UP);
             else
-                enemy.move(speed, DOWN);
+                enemy.move(getEnemySpeed(enemy.getEnemyType()), DOWN);
         } else {
-            int newX = (int)(enemy.getX() + getSpeedAndWidth(RIGHT));
-            if (getTileType(newX, (int)enemy.getY()) == ROAD_TILE)
-                enemy.move(speed, RIGHT);
+            int newX = (int) (enemy.getX() + getSpeedAndWidth(RIGHT, enemy.getEnemyType()));
+            if (getTileType(newX, (int) enemy.getY()) == ROAD_TILE)
+                enemy.move(getEnemySpeed(enemy.getEnemyType()), RIGHT);
             else
-                enemy.move(speed, LEFT);
+                enemy.move(getEnemySpeed(enemy.getEnemyType()), LEFT);
         }
 
     }
@@ -123,28 +124,39 @@ public class EnemyHandler {
     }
 
     private int getTileType(int x, int y) {
-        return playing.getTileType(x,y);
+        return playing.getTileType(x, y);
     }
 
-    private float getSpeedAndWidth(int lastDirection) {
+    private float getSpeedAndWidth(int lastDirection, int enemyType) {
         if (lastDirection == LEFT)
-            return -speed;
+            return -getEnemySpeed(enemyType);
         else if (lastDirection == RIGHT)
-            return speed + 32;
+            return getEnemySpeed(enemyType) + 32;
         return 0;
     }
 
-    private float getSpeedAndHeight(int lastDirection) {
+    private float getSpeedAndHeight(int lastDirection, int enemyType) {
         if (lastDirection == UP)
-            return -speed;
+            return -getEnemySpeed(enemyType);
         else if (lastDirection == DOWN)
-            return speed + 32;
+            return getEnemySpeed(enemyType) + 32;
         return 0;
     }
 
     public void draw(Graphics g) {
-        for (Enemy enemy : enemies)
+        for (Enemy enemy : enemies) {
             drawEnemy(enemy, g);
+            drawHealthBar(enemy, g);
+        }
+    }
+
+    private void drawHealthBar(Enemy enemy, Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect((int)enemy.getX() + 16 - HP_BAR_W/2 , (int)enemy.getY()- 10,HP_BAR_W, 3);
+    }
+
+    private int getNewBarWidth(Enemy enemy) {
+        return (int)(HP_BAR_W * enemy.getHealthBar());
     }
 
     private void drawEnemy(Enemy enemy, Graphics g) {

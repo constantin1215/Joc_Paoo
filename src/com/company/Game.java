@@ -25,6 +25,7 @@ public class Game extends JFrame implements Runnable {
     private Settings settings;
 
     private TileHandler tileHandler;
+
     public Game() {
         initClasses();
         createDefaultLvl();
@@ -52,11 +53,12 @@ public class Game extends JFrame implements Runnable {
         int[] arr = new int[400];
         Arrays.fill(arr, 1);
 
-        LoadSave.createDefaultLvl("new_lvl",arr);
+        LoadSave.createDefaultLvl("new_lvl", arr);
     }
 
     private void start() {
-        gameThread = new Thread(this) {};
+        gameThread = new Thread(this) {
+        };
         gameThread.start();
     }
 
@@ -81,7 +83,7 @@ public class Game extends JFrame implements Runnable {
         int updates = 0;
 
         double timePerUpdate = 1000000000.0 / UPS_SET;
-        double timePerFrame = 1000000000.0 / FPS_SET;;
+        double timePerFrame = 1000000000.0 / FPS_SET;
         long lastFrame = System.nanoTime();
         long lastUpdate = System.nanoTime();
         long lastTimeCheck = System.currentTimeMillis();

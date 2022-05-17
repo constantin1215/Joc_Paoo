@@ -8,8 +8,9 @@ import java.awt.*;
 import static com.company.GameStates.MENU;
 import static com.company.GameStates.SetGameState;
 
-public class Settings extends GameScene implements SceneMethods{
+public class Settings extends GameScene implements SceneMethods {
     private Bttn bMenu;
+
     public Settings(Game game) {
         super(game);
         initButtons();
@@ -18,7 +19,7 @@ public class Settings extends GameScene implements SceneMethods{
     @Override
     public void render(Graphics g) {
         g.setColor(Color.blue);
-        g.fillRect(0,0,640,640);
+        g.fillRect(0, 0, 640, 640);
         drawButtons(g);
     }
 
@@ -27,12 +28,12 @@ public class Settings extends GameScene implements SceneMethods{
     }
 
     private void initButtons() {
-        bMenu = new Bttn("Menu", 5,5,100,100/3);
+        bMenu = new Bttn("Menu", 5, 5, 100, 100 / 3);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
-        if (bMenu.getLimits().contains(x,y)) {
+        if (bMenu.getLimits().contains(x, y)) {
             SetGameState(MENU);
         }
     }
@@ -40,14 +41,14 @@ public class Settings extends GameScene implements SceneMethods{
     @Override
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
-        if (bMenu.getLimits().contains(x,y)) {
+        if (bMenu.getLimits().contains(x, y)) {
             bMenu.setMouseOver(true);
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        if (bMenu.getLimits().contains(x,y)) {
+        if (bMenu.getLimits().contains(x, y)) {
             bMenu.setMousePressed(true);
         }
     }

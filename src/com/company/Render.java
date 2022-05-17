@@ -1,15 +1,10 @@
 package com.company;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Render {
 
-    private Game game;
+    private final Game game;
 
     public Render(Game game) {
         this.game = game;

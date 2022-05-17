@@ -1,7 +1,6 @@
 package inputs;
 
 import com.company.Game;
-import com.company.GameStates;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,7 +8,8 @@ import java.awt.event.KeyListener;
 import static com.company.GameStates.*;
 
 public class KeyboardListener implements KeyListener {
-    private Game game;
+    private final Game game;
+
     public KeyboardListener(Game game) {
         this.game = game;
     }
@@ -23,6 +23,8 @@ public class KeyboardListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (gameStates == EDIT) {
             game.getEdit().keyPressed(e);
+        } else if (gameStates == PLAYING) {
+            game.getPlaying().keyPressed(e);
         }
     }
 
