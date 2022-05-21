@@ -7,21 +7,37 @@ public class Tower {
     private final int y;
     private final int id;
     private final int towerType;
-    private int range;
-    private float fireRate, damage;
+    private int range, damage;
+    private int cooldown;
+    private int cooldownTimer;
+    private int cost;
 
     public Tower(int x, int y, int id, int towerType) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        cooldownTimer = 0;
         setDamage();
         setRange();
         setFireRate();
+        setTowerCost();
+    }
+
+    public void update() {
+        cooldownTimer++;
+    }
+
+    public boolean notOnCooldown() {
+        return cooldownTimer >= cooldown;
+    }
+
+    public void resetCooldown() {
+        cooldownTimer = 0;
     }
 
     private void setFireRate() {
-        fireRate = getTowerFireRate(towerType);
+        cooldown = getTowerFireRate(towerType);
     }
 
     private void setRange() {
@@ -30,6 +46,10 @@ public class Tower {
 
     private void setDamage() {
         damage = getTowerDamage(towerType);
+    }
+
+    private void setTowerCost() {
+        cost = getTowerCost(towerType);
     }
 
     public int getX() {
@@ -48,7 +68,7 @@ public class Tower {
         return towerType;
     }
 
-    public float getDamage() {
+    public int getDamage() {
         return damage;
     }
 
@@ -56,7 +76,11 @@ public class Tower {
         return range;
     }
 
-    public float getFireRate() {
-        return fireRate;
+    public float getCooldown() {
+        return cooldown;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

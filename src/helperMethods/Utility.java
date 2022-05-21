@@ -25,4 +25,11 @@ public class Utility {
         }
         return result;
     }
+
+    public static int getDistance2Points(float x1, float y1, float x2, float y2) {
+        float dif1 = Math.abs(x1 - x2);
+        float dif2 = Math.abs(y1 - y2);
+
+        return (int) Math.hypot(dif1, dif2);
+    }
 }

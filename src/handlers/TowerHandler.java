@@ -1,12 +1,15 @@
 package handlers;
 
+import enemies.Enemy;
 import helperMethods.LoadSave;
+import helperMethods.Utility;
 import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 
 public class TowerHandler {
 
@@ -22,7 +25,10 @@ public class TowerHandler {
     }
 
     public void addTower(Tower selectedTower, int x, int y) {
-        towers.add(new Tower(x, y, towersCount++, selectedTower.getTowerType()));
+        if (selectedTower.getCost() <= playing.getMoney()) {
+            towers.add(new Tower(x, y, towersCount++, selectedTower.getTowerType()));
+            playing.spendMoney(selectedTower.getCost());
+        }
     }
 
     private void loadTowerImg() {
@@ -42,7 +48,24 @@ public class TowerHandler {
     }
 
     public void update() {
+        for (Tower tower : towers) {
+            tower.update();
+            attackEnemyInRange(tower);
+        }
+    }
 
+    private void attackEnemyInRange(Tower tower) {
+        for (Enemy enemy : playing.getEnemyHandler().getEnemies())
+            if (enemy.isAlive() && enemyInRange(tower, enemy) && tower.notOnCooldown()) {
+                playing.shoot(tower, enemy);
+                tower.resetCooldown();
+            }
+    }
+
+    private boolean enemyInRange(Tower tower, Enemy enemy) {
+        int distance = Utility.getDistance2Points(tower.getX(), tower.getY(), enemy.getX(), enemy.getY());
+
+        return distance < tower.getRange();
     }
 
     public Tower getTowerAt(int x, int y) {

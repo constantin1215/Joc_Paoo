@@ -19,19 +19,21 @@ public class EnemyHandler {
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final PathPoint start;
     private final PathPoint finish;
-    private int HP_BAR_W = 26;
+    private final int HP_BAR_W = 26;
+    private BufferedImage fireEffect;
 
     public EnemyHandler(Playing playing, PathPoint start, PathPoint finish) {
         this.playing = playing;
         enemyImgs = new BufferedImage[4];
         this.start = start;
         this.finish = finish;
-        addEnemy(RED);
-        addEnemy(BLUE);
-        addEnemy(GREEN);
-        addEnemy(YELLOW);
-        loadEnemyImg();
 
+        loadFireImg();
+        loadEnemyImg();
+    }
+
+    private void loadFireImg() {
+        fireEffect = LoadSave.getSpriteAtlas().getSubimage(32 * 9, 32 * 2, 32, 32);
     }
 
     private void loadEnemyImg() {
@@ -57,8 +59,31 @@ public class EnemyHandler {
     }
 
     public void update() {
+        updateWaveHandler();
+        
+        if (delayPassed()) {
+            spawn();
+        }
+
         for (Enemy enemy : enemies)
-            pathfind(enemy);
+            if (enemy.isAlive())
+                pathfind(enemy);
+    }
+
+    private void updateWaveHandler() {
+        playing.getWaveHandler().update();
+    }
+
+    private void spawn() {
+        addEnemy(playing.getWaveHandler().spawnNextEnemy());
+    }
+
+    private boolean delayPassed() {
+        if (playing.getWaveHandler().delayPassed()) {
+            if (playing.getWaveHandler().waveNotFinished())
+                return true;
+        }
+        return false;
     }
 
     public void pathfind(Enemy enemy) {
@@ -71,7 +96,10 @@ public class EnemyHandler {
         if (getTileType(newX, newY) == ROAD_TILE) {
             enemy.move(getEnemySpeed(enemy.getEnemyType()), enemy.getLastDirection());
         } else if (isAtEnd(enemy)) {
-            System.out.println("-1 Lives");
+            System.out.println("-" + enemy.getDamage() + " Lives");
+            playing.lifeLost(enemy.getDamage());
+            enemy.setAlive(false);
+            System.out.println(playing.getLives() + " Lives left");
         } else {
             setNewDirectionAndMove(enemy);
         }
@@ -145,21 +173,33 @@ public class EnemyHandler {
 
     public void draw(Graphics g) {
         for (Enemy enemy : enemies) {
-            drawEnemy(enemy, g);
-            drawHealthBar(enemy, g);
+            if (enemy.isAlive()) {
+                drawEnemy(enemy, g);
+                drawHealthBar(enemy, g);
+                drawEffect(enemy, g);
+            }
         }
+    }
+
+    private void drawEffect(Enemy enemy, Graphics g) {
+        if (enemy.isOnFire())
+            g.drawImage(fireEffect, (int) enemy.getX(), (int) enemy.getY(), null);
     }
 
     private void drawHealthBar(Enemy enemy, Graphics g) {
         g.setColor(Color.RED);
-        g.fillRect((int)enemy.getX() + 16 - HP_BAR_W/2 , (int)enemy.getY()- 10,HP_BAR_W, 3);
+        g.fillRect((int) enemy.getX() + 16 - getNewBarWidth(enemy) / 2, (int) enemy.getY() - 10, getNewBarWidth(enemy), 3);
     }
 
     private int getNewBarWidth(Enemy enemy) {
-        return (int)(HP_BAR_W * enemy.getHealthBar());
+        return (int) (HP_BAR_W * enemy.getHealthBar());
     }
 
     private void drawEnemy(Enemy enemy, Graphics g) {
         g.drawImage(enemyImgs[enemy.getEnemyType()], (int) enemy.getX(), (int) enemy.getY(), null);
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 }

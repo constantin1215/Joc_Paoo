@@ -2,10 +2,7 @@ package com.company;
 
 import handlers.TileHandler;
 import helperMethods.LoadSave;
-import scenes.Edit;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -22,7 +19,8 @@ public class Game extends JFrame implements Runnable {
     private Menu menu;
     private Playing playing;
     private Edit edit;
-    private Settings settings;
+    private Stats stats;
+    private GameOver gameOver;
 
     private TileHandler tileHandler;
 
@@ -46,7 +44,8 @@ public class Game extends JFrame implements Runnable {
         menu = new Menu(this);
         edit = new Edit(this);
         playing = new Playing(this);
-        settings = new Settings(this);
+        stats = new Stats(this);
+        gameOver = new GameOver(this);
     }
 
     private void createDefaultLvl() {
@@ -66,7 +65,7 @@ public class Game extends JFrame implements Runnable {
         switch (GameStates.gameStates) {
             case PLAYING -> playing.update();
             case EDIT -> edit.update();
-            case MENU, SETTINGS -> {
+            case MENU, SETTINGS, GAME_OVER -> {
             }
         }
     }
@@ -124,8 +123,8 @@ public class Game extends JFrame implements Runnable {
         return playing;
     }
 
-    public Settings getSettings() {
-        return settings;
+    public Stats getSettings() {
+        return stats;
     }
 
     public Edit getEdit() {
@@ -134,5 +133,9 @@ public class Game extends JFrame implements Runnable {
 
     public TileHandler getTileHandler() {
         return tileHandler;
+    }
+
+    public GameOver getGameOver() {
+        return gameOver;
     }
 }

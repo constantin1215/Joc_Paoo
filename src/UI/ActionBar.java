@@ -1,16 +1,14 @@
 package UI;
 
-import helperMethods.Constants;
 import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static helperMethods.Constants.*;
-
 import static com.company.GameStates.MENU;
 import static com.company.GameStates.SetGameState;
+import static helperMethods.Constants.Towers;
 
 public class ActionBar extends Bar {
     private Bttn bMenu;
@@ -43,6 +41,8 @@ public class ActionBar extends Bar {
     }
 
     private void drawButtons(Graphics g) {
+        String[] prices = {String.valueOf(Towers.getTowerCost(Towers.MNK_DARTS)), String.valueOf(Towers.getTowerCost(Towers.MNK_BOOMERANG)), String.valueOf(Towers.getTowerCost(Towers.MNK_WIZARD))};
+        int i = 0;
         bMenu.draw(g);
 
         for (Bttn bttn : towerBttn) {
@@ -50,6 +50,11 @@ public class ActionBar extends Bar {
             g.fillRect(bttn.x, bttn.y, bttn.width, bttn.height);
             g.drawImage(playing.getTowerHandler().getTowerImg()[bttn.getId()], bttn.x, bttn.y, bttn.width, bttn.height, null);
             btnAnimation(g, bttn);
+            g.setColor(Color.black);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 15));
+            int txtW = g.getFontMetrics().stringWidth(prices[i]);
+            g.drawString(prices[i], bttn.x + (bttn.width - txtW) / 2, (int) (bttn.y + 1.3 * bttn.height));
+            i++;
         }
 
     }
@@ -63,8 +68,17 @@ public class ActionBar extends Bar {
         g.fillRect(x, y, width, height);
 
         drawButtons(g);
+        drawInfo(g);
 
         drawDisplayedTower(g);
+    }
+
+    private void drawInfo(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 15));
+        g.drawString("Lives: " + playing.getLives(), 5, 700);
+        g.drawString("Coins: " + playing.getMoney(), 5, 725);
+        g.drawString("Wave: " + (playing.getWaveHandler().getWaveI() + 1), 5, 750);
     }
 
     private void drawDisplayedTower(Graphics g) {
@@ -76,18 +90,25 @@ public class ActionBar extends Bar {
             g.drawRect(420, 650, 50, 50);
             g.drawImage(playing.getTowerHandler().getTowerImg()[displayedTower.getTowerType()], 420, 650, 50, 50, null);
             g.setFont(new Font("TimesRoman", Font.BOLD, 15));
-            g.drawString(Towers.getName(displayedTower.getTowerType()), 490,660);
-            g.drawString("ID: " + displayedTower.getId(), 490,675);
-            
+            g.drawString(Towers.getName(displayedTower.getTowerType()), 490, 660);
+            g.drawString("ID: " + displayedTower.getId(), 490, 675);
+            g.drawString("Cost: " + displayedTower.getCost(), 420, 720);
+
             drawHightlightOnTower(g);
+            drawRange(g);
         }
+    }
+
+    private void drawRange(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawOval(displayedTower.getX() + 16 - displayedTower.getRange(), displayedTower.getY() + 16 - displayedTower.getRange(), displayedTower.getRange() * 2, displayedTower.getRange() * 2);
     }
 
     private void drawHightlightOnTower(Graphics g) {
         g.setColor(Color.green);
         g.drawRect(displayedTower.getX(), displayedTower.getY(), 32, 32);
         g.setColor(Color.RED);
-        g.drawRect(displayedTower.getX() - 3, displayedTower.getY() -3, 38, 38);
+        g.drawRect(displayedTower.getX() - 3, displayedTower.getY() - 3, 38, 38);
     }
 
     public void displayTower(Tower tower) {

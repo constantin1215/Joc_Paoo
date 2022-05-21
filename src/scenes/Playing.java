@@ -2,8 +2,11 @@ package scenes;
 
 import UI.ActionBar;
 import com.company.Game;
+import enemies.Enemy;
 import handlers.EnemyHandler;
+import handlers.ProjectileHandler;
 import handlers.TowerHandler;
+import handlers.WaveHandler;
 import helperMethods.LoadSave;
 import objects.PathPoint;
 import objects.Tower;
@@ -12,6 +15,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import static com.company.GameStates.GAME_OVER;
+import static com.company.GameStates.SetGameState;
 import static helperMethods.Constants.Tiles.GRASS_TILE;
 
 
@@ -23,16 +28,26 @@ public class Playing extends GameScene implements SceneMethods {
     private int mouseX, mouseY;
     private final EnemyHandler enemyHandler;
     private final TowerHandler towerHandler;
+    private final ProjectileHandler projectileHandler;
+    private final WaveHandler waveHandler;
     private PathPoint start, finish;
     private Tower selectedTower;
+    private int lives;
+    private int score;
+    private int bank;
 
     public Playing(Game game) {
         super(game);
+        this.lives = 15;
+        this.score = 0;
+        this.bank = 100;
 
         loadDefaultLvl();
         actionBar = new ActionBar(0, 640, 640, 160, this);
         enemyHandler = new EnemyHandler(this, start, finish);
         towerHandler = new TowerHandler(this);
+        projectileHandler = new ProjectileHandler(this);
+        waveHandler = new WaveHandler(this);
     }
 
     private void loadDefaultLvl() {
@@ -48,6 +63,7 @@ public class Playing extends GameScene implements SceneMethods {
         actionBar.draw(g);
         enemyHandler.draw(g);
         towerHandler.draw(g);
+        projectileHandler.draw(g);
         drawSelectedTower(g);
         drawHighlighter(g);
     }
@@ -82,6 +98,18 @@ public class Playing extends GameScene implements SceneMethods {
         updateTick();
         enemyHandler.update();
         towerHandler.update();
+        projectileHandler.update();
+    }
+
+    public void lifeLost(int lifeDamage) {
+        this.lives -= lifeDamage;
+
+        if (lives <= 0)
+            SetGameState(GAME_OVER);
+    }
+
+    public void spendMoney(int value) {
+        this.bank -= value;
     }
 
     @Override
@@ -101,8 +129,9 @@ public class Playing extends GameScene implements SceneMethods {
                 actionBar.displayTower(tower);
             }
         }
-//        else
-//            enemyHandler.addEnemy(RED);
+//        if (y<640) {
+//            new Timer().schedule(new AddEnemyThread(enemyHandler), 0, 1000);
+//        }
     }
 
     private Tower getTowerAt(int x, int y) {
@@ -114,6 +143,14 @@ public class Playing extends GameScene implements SceneMethods {
         int tileType = getGame().getTileHandler().getTile(id).getType();
 
         return tileType == GRASS_TILE;
+    }
+
+    public void addToScore(int score) {
+        this.score += score;
+    }
+
+    public void addToCoins(int money) {
+        this.bank += money;
     }
 
     @Override
@@ -156,6 +193,10 @@ public class Playing extends GameScene implements SceneMethods {
         return getGame().getTileHandler().getTile(id).getType();
     }
 
+    public void shoot(Tower tower, Enemy enemy) {
+        projectileHandler.createProjectile(tower, enemy);
+    }
+
     public TowerHandler getTowerHandler() {
         return towerHandler;
     }
@@ -168,4 +209,25 @@ public class Playing extends GameScene implements SceneMethods {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
             selectedTower = null;
     }
+
+    public EnemyHandler getEnemyHandler() {
+        return enemyHandler;
+    }
+
+    public WaveHandler getWaveHandler() {
+        return waveHandler;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getMoney() {
+        return bank;
+    }
+
 }

@@ -24,12 +24,14 @@ public class Menu extends GameScene implements SceneMethods {
 
         bPlay = new Bttn("Play", x, y, w, h);
         bEdit = new Bttn("Edit", x, y + offSet, w, h);
-        bSettings = new Bttn("Settings", x, y + 2 * offSet, w, h);
+        bSettings = new Bttn("Stats", x, y + 2 * offSet, w, h);
         bQuit = new Bttn("Quit", x, y + 3 * offSet, w, h);
     }
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.CYAN);
+        g.fillRect(0, 0, 640, 800);
         drawButtons(g);
     }
 

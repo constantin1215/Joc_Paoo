@@ -1,6 +1,27 @@
 package helperMethods;
 
 public class Constants {
+    public static class Projectiles {
+        public static final int DART = 0;
+        public static final int BOOMERANG = 1;
+        public static final int FIREBALL = 2;
+
+        public static float getSpeed(int type) {
+            switch (type) {
+                case DART -> {
+                    return 3;
+                }
+                case BOOMERANG -> {
+                    return 2;
+                }
+                case FIREBALL -> {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+    }
+
     public static class Towers {
         public static final int MNK_DARTS = 0;
         public static final int MNK_BOOMERANG = 1;
@@ -21,16 +42,16 @@ public class Constants {
             return "";
         }
 
-        public static float getTowerDamage(int type) {
+        public static int getTowerDamage(int type) {
             switch (type) {
                 case MNK_DARTS -> {
-                    return 1;
+                    return 25;
                 }
                 case MNK_BOOMERANG -> {
-                    return 2;
+                    return 40;
                 }
                 case MNK_WIZARD -> {
-                    return 3;
+                    return 60;
                 }
             }
             return 0;
@@ -39,28 +60,43 @@ public class Constants {
         public static int getTowerRange(int type) {
             switch (type) {
                 case MNK_DARTS -> {
-                    return 1;
+                    return 100;
                 }
                 case MNK_BOOMERANG -> {
-                    return 2;
+                    return 120;
                 }
                 case MNK_WIZARD -> {
-                    return 3;
+                    return 80;
                 }
             }
             return 0;
         }
 
-        public static float getTowerFireRate(int type) {
+        public static int getTowerFireRate(int type) {
             switch (type) {
                 case MNK_DARTS -> {
-                    return 1;
+                    return 30;
                 }
                 case MNK_BOOMERANG -> {
-                    return 2;
+                    return 40;
                 }
                 case MNK_WIZARD -> {
-                    return 3;
+                    return 60;
+                }
+            }
+            return 0;
+        }
+
+        public static int getTowerCost(int type) {
+            switch (type) {
+                case MNK_DARTS -> {
+                    return 25;
+                }
+                case MNK_BOOMERANG -> {
+                    return 50;
+                }
+                case MNK_WIZARD -> {
+                    return 100;
                 }
             }
             return 0;
@@ -95,7 +131,7 @@ public class Constants {
                     return 0.9f;
                 }
             }
-            return 0.1f;
+            return 0;
         }
 
         public static int getStartHealth(int enemyType) {
@@ -104,13 +140,70 @@ public class Constants {
                     return 100;
                 }
                 case BLUE -> {
-                    return 100;
+                    return 110;
                 }
                 case GREEN -> {
-                    return 100;
+                    return 120;
                 }
                 case YELLOW -> {
-                    return 100;
+                    return 130;
+                }
+            }
+
+            return 0;
+        }
+
+        public static int getLifeDamage(int enemyType) {
+            switch (enemyType) {
+                case RED -> {
+                    return 1;
+                }
+                case BLUE -> {
+                    return 2;
+                }
+                case GREEN -> {
+                    return 3;
+                }
+                case YELLOW -> {
+                    return 4;
+                }
+            }
+
+            return 0;
+        }
+
+        public static int getScoreValue(int enemyType) {
+            switch (enemyType) {
+                case RED -> {
+                    return 10;
+                }
+                case BLUE -> {
+                    return 20;
+                }
+                case GREEN -> {
+                    return 30;
+                }
+                case YELLOW -> {
+                    return 40;
+                }
+            }
+
+            return 0;
+        }
+
+        public static int getCoins(int enemyType) {
+            switch (enemyType) {
+                case RED -> {
+                    return 2;
+                }
+                case BLUE -> {
+                    return 4;
+                }
+                case GREEN -> {
+                    return 6;
+                }
+                case YELLOW -> {
+                    return 8;
                 }
             }
 

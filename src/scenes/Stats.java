@@ -8,19 +8,40 @@ import java.awt.*;
 import static com.company.GameStates.MENU;
 import static com.company.GameStates.SetGameState;
 
-public class Settings extends GameScene implements SceneMethods {
+public class Stats extends GameScene implements SceneMethods {
     private Bttn bMenu;
+    private final int y = 150;
+    private final int offSet = 100;
 
-    public Settings(Game game) {
+    public Stats(Game game) {
         super(game);
         initButtons();
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.blue);
-        g.fillRect(0, 0, 640, 640);
+        g.setColor(Color.cyan);
+        g.fillRect(0, 0, 640, 800);
         drawButtons(g);
+        drawStats(g);
+    }
+
+    private void drawStats(Graphics g) {
+        int width = 640;
+        String[] texte = {"1000", "Total red baloons poped: 1000", "Total green baloons poped: 1000", "Total blue baloons poped: 1000", "Total yellow baloons poped: 1000"};
+
+        g.setColor(Color.RED);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+
+        String text = "High Score: ";
+        int txtWidth = g.getFontMetrics().stringWidth(text);
+        g.drawString(text, (width - txtWidth) / 2, y);
+
+        g.setColor(Color.black);
+        for (int i = 0; i < texte.length; i++) {
+            txtWidth = g.getFontMetrics().stringWidth(texte[i]);
+            g.drawString(texte[i], (width - txtWidth) / 2, y + (i + 1) * offSet);
+        }
     }
 
     private void drawButtons(Graphics g) {
