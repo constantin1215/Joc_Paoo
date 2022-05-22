@@ -1,7 +1,7 @@
 package handlers;
 
 import enemies.Enemy;
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import objects.Projectile;
 import objects.Tower;
 import scenes.Playing;
@@ -10,8 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static helperMethods.Constants.Projectiles.*;
-import static helperMethods.Constants.Towers.*;
+import static Other.Constants.Projectiles.*;
+import static Other.Constants.Towers.*;
 
 public class ProjectileHandler {
     private final Playing playing;
@@ -109,6 +109,7 @@ public class ProjectileHandler {
                     enemy.setScoreRecorded(true);
                     enemy.registerDeath();
                     enemy.resetBounds();
+                    playing.notifyObservers();
                 }
                 return true;
             }

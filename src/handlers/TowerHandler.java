@@ -1,8 +1,8 @@
 package handlers;
 
 import enemies.Enemy;
-import helperMethods.LoadSave;
-import helperMethods.Utility;
+import Other.LoadSave;
+import Other.Utility;
 import objects.Tower;
 import scenes.Playing;
 

@@ -2,7 +2,7 @@ package scenes;
 
 import UI.ToolBar;
 import com.company.Game;
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import objects.PathPoint;
 import objects.Tile;
 
@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import static helperMethods.Constants.Tiles.ROAD_TILE;
+import static Other.Constants.Tiles.ROAD_TILE;
 
 public class Edit extends GameScene implements SceneMethods {
     private int[][] lvl;

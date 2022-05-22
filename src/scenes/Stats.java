@@ -1,9 +1,11 @@
 package scenes;
 
+import Other.Database;
 import UI.Bttn;
 import com.company.Game;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static com.company.GameStates.MENU;
 import static com.company.GameStates.SetGameState;
@@ -12,10 +14,12 @@ public class Stats extends GameScene implements SceneMethods {
     private Bttn bMenu;
     private final int y = 150;
     private final int offSet = 100;
+    private ArrayList<Integer> scores;
 
     public Stats(Game game) {
         super(game);
         initButtons();
+        scores = Database.getInstance().getDatabaseInfo();
     }
 
     @Override
@@ -28,7 +32,7 @@ public class Stats extends GameScene implements SceneMethods {
 
     private void drawStats(Graphics g) {
         int width = 640;
-        String[] texte = {"1000", "Total red baloons poped: 1000", "Total green baloons poped: 1000", "Total blue baloons poped: 1000", "Total yellow baloons poped: 1000"};
+        String[] texte = {"" + scores.get(0), "Total red baloons poped: " + scores.get(1), "Total green baloons poped: " + scores.get(2), "Total blue baloons poped: " + scores.get(3), "Total yellow baloons poped: " + scores.get(4)};
 
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.BOLD, 30));

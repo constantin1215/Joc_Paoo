@@ -1,6 +1,6 @@
 package objects;
 
-import static helperMethods.Constants.Towers.*;
+import static Other.Constants.Towers.*;
 
 public class Tower {
     private final int x;

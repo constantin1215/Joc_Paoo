@@ -1,7 +1,7 @@
 package com.company;
 
 import handlers.TileHandler;
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import scenes.*;
 
 import javax.swing.*;

@@ -1,6 +1,6 @@
 package enemies;
 
-import static helperMethods.Constants.Enemies.RED;
+import static Other.Constants.Enemies.RED;
 
 public class RedBaloon extends Enemy {
     private static final int deathCount = 0;

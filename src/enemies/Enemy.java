@@ -2,8 +2,8 @@ package enemies;
 
 import java.awt.*;
 
-import static helperMethods.Constants.Direction.*;
-import static helperMethods.Constants.Enemies.*;
+import static Other.Constants.Direction.*;
+import static Other.Constants.Enemies.*;
 
 public abstract class Enemy {
     protected float x, y;

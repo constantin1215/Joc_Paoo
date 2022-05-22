@@ -1,5 +1,10 @@
 package scenes;
 
+import Observers.Observer;
+import Observers.ObserverKill;
+import Observers.ObserverScore;
+import Observers.Subject;
+import Other.Database;
 import UI.ActionBar;
 import com.company.Game;
 import enemies.Enemy;
@@ -7,7 +12,7 @@ import handlers.EnemyHandler;
 import handlers.ProjectileHandler;
 import handlers.TowerHandler;
 import handlers.WaveHandler;
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import objects.PathPoint;
 import objects.Tower;
 
@@ -15,12 +20,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import static Other.Constants.Enemies.*;
 import static com.company.GameStates.GAME_OVER;
 import static com.company.GameStates.SetGameState;
-import static helperMethods.Constants.Tiles.GRASS_TILE;
+import static Other.Constants.Tiles.GRASS_TILE;
 
 
-public class Playing extends GameScene implements SceneMethods {
+public class Playing extends GameScene implements SceneMethods, Subject {
 
     private int[][] lvl;
 
@@ -35,6 +41,9 @@ public class Playing extends GameScene implements SceneMethods {
     private int lives;
     private int score;
     private int bank;
+    private ArrayList<Observer> observers;
+    private ObserverKill observerKill;
+    private ObserverScore observerScore;
 
     public Playing(Game game) {
         super(game);
@@ -48,6 +57,11 @@ public class Playing extends GameScene implements SceneMethods {
         towerHandler = new TowerHandler(this);
         projectileHandler = new ProjectileHandler(this);
         waveHandler = new WaveHandler(this);
+        observers = new ArrayList<>();
+        observerKill = new ObserverKill();
+        observerScore = new ObserverScore();
+        attach(observerKill);
+        attach(observerScore);
     }
 
     private void loadDefaultLvl() {
@@ -104,8 +118,21 @@ public class Playing extends GameScene implements SceneMethods {
     public void lifeLost(int lifeDamage) {
         this.lives -= lifeDamage;
 
-        if (lives <= 0)
+        if (lives <= 0) {
             SetGameState(GAME_OVER);
+            addScoresToDatabase();
+        }
+
+    }
+
+    private void addScoresToDatabase() {
+        if (score > Database.getInstance().getDatabaseInfo().get(0))
+            Database.getInstance().updateEntry("high_score", score);
+
+        Database.getInstance().updateEntry("red_kills", Enemy.getDeaths(RED) + Database.getInstance().getDatabaseInfo().get(1));
+        Database.getInstance().updateEntry("blue_kills", Enemy.getDeaths(BLUE) + Database.getInstance().getDatabaseInfo().get(2));
+        Database.getInstance().updateEntry("green_kills", Enemy.getDeaths(GREEN) + Database.getInstance().getDatabaseInfo().get(3));
+        Database.getInstance().updateEntry("ylw_kills", Enemy.getDeaths(YELLOW) + Database.getInstance().getDatabaseInfo().get(4));
     }
 
     public void spendMoney(int value) {
@@ -152,6 +179,23 @@ public class Playing extends GameScene implements SceneMethods {
     public void addToCoins(int money) {
         this.bank += money;
     }
+
+    @Override
+    public void attach(Observer obs) {
+        observers.add(obs);
+    }
+
+    @Override
+    public void detach(Observer obs) {
+        observers.remove(obs);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer obs : observers)
+            obs.update();
+    }
+
 
     @Override
     public void mouseMoved(int x, int y) {
@@ -229,5 +273,4 @@ public class Playing extends GameScene implements SceneMethods {
     public int getMoney() {
         return bank;
     }
-
 }

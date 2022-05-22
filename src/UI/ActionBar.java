@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import static com.company.GameStates.MENU;
 import static com.company.GameStates.SetGameState;
-import static helperMethods.Constants.Towers;
+import static Other.Constants.Towers;
 
 public class ActionBar extends Bar {
     private Bttn bMenu;

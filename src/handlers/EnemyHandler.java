@@ -1,7 +1,7 @@
 package handlers;
 
 import enemies.*;
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import objects.PathPoint;
 import scenes.Playing;
 
@@ -9,9 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static helperMethods.Constants.Direction.*;
-import static helperMethods.Constants.Enemies.*;
-import static helperMethods.Constants.Tiles.ROAD_TILE;
+import static Other.Constants.Direction.*;
+import static Other.Constants.Enemies.*;
+import static Other.Constants.Tiles.ROAD_TILE;
 
 public class EnemyHandler {
     private final Playing playing;

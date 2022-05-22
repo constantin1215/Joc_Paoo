@@ -1,13 +1,13 @@
 package handlers;
 
-import helperMethods.LoadSave;
-import helperMethods.SpriteDirection;
+import Other.LoadSave;
+import Other.SpriteDirection;
 import objects.Tile;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static helperMethods.Constants.Tiles.*;
+import static Other.Constants.Tiles.*;
 
 public class TileHandler {
 

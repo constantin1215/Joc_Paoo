@@ -6,7 +6,7 @@ import scenes.Playing;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static helperMethods.Constants.Enemies.*;
+import static Other.Constants.Enemies.*;
 
 public class WaveHandler {
     private final Playing playing;

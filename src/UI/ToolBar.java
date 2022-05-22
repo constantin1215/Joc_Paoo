@@ -1,6 +1,6 @@
 package UI;
 
-import helperMethods.LoadSave;
+import Other.LoadSave;
 import objects.Tile;
 import scenes.Edit;
 

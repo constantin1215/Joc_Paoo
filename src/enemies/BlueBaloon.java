@@ -1,6 +1,6 @@
 package enemies;
 
-import static helperMethods.Constants.Enemies.BLUE;
+import static Other.Constants.Enemies.BLUE;
 
 public class BlueBaloon extends Enemy {
     public BlueBaloon(float x, float y, int id) {
